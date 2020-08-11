@@ -1,0 +1,35 @@
+<div class="content">
+  <img src="./public/icons/cancel.svg" class="modal-close" alt="close" onclick="closeModal()" />
+  <div class="title">
+    <img src="{{ImageBaseURL}}w500{{backdrop_path}}" />
+    {{#if tagline}}
+      <h2>"{{tagline}}"</h2>
+    {{/if}}
+  </div>
+  <div class="body">
+    <div class="group">
+      <h2>{{title}}</h2>
+      <div class="labels">
+        <img src="./public/icons/star.svg" class="icons" alt="rating" />
+        <span>{{vote_average}}</span>
+      </div>
+      <div class="labels">
+        <img src="./public/icons/list.svg" class="icons" alt="duration" />
+        <span>{{release_date}}</span>
+      </div>
+    </div>
+    <div class="group">
+      <p>{{overview}}</p>
+    </div>
+    {{#if castings}}
+      <div class="group">
+        <h3>Cast</h3>
+        <span>{{genersStr castings}}</span>
+      </div>
+    {{/if}}
+    <div class="group">
+      <h3>Genres</h3>
+      <span>{{genersStr genres}}</span>
+    </div>
+  </div>
+</div>
