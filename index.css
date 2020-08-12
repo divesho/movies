@@ -19,13 +19,14 @@ body {
   background-color: #012340;
   color: #ffffff;
   font-family: "roboto-regular";
-  font-size: 14px;
+  font-size: 12px;
+  overflow-x: hidden;
   padding: 0;
   margin: 0;
 }
 @media (min-width: 992px) {
   body {
-    font-size: 18px;
+    font-size: 14px;
   }
 }
 
@@ -47,7 +48,7 @@ ul, li {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: gray;
+  background: #09131e;
   border-radius: 5px;
 }
 
@@ -94,9 +95,9 @@ header .left-items, header .right-items {
   }
 }
 header img.logo {
-  vertical-align: bottom;
-  width: 20px;
-  height: 20px;
+  vertical-align: middle;
+  width: 23px;
+  height: 23px;
 }
 @media (min-width: 992px) {
   header img.logo {
@@ -108,15 +109,16 @@ header nav, header ul, header li {
   display: inline;
 }
 header nav ul li {
-  margin-left: 10px;
+  margin-left: 15px;
   font-family: "roboto-light";
+  font-weight: 300;
   cursor: pointer;
 }
 header nav ul li:hover {
   color: #d2d2d2;
 }
 header nav ul li.active {
-  font-weight: 900;
+  font-weight: bold;
   font-family: "roboto-bold";
 }
 header .right-items {
@@ -125,6 +127,7 @@ header .right-items {
 header .right-items input {
   padding: 10px 15px;
   width: 100%;
+  height: 37px;
   border: 2px solid #011527;
   background-color: #012340;
   outline: #011527;
@@ -136,18 +139,18 @@ header .right-items input::placeholder {
 }
 @media (min-width: 992px) {
   header .right-items input {
-    width: 60%;
+    width: 316px;
   }
 }
 header .right-items label {
   position: absolute;
-  margin-top: 10px;
+  margin-top: 7px;
   right: 35px;
   cursor: pointer;
 }
 header .right-items label .icons {
-  width: 15px;
-  height: 15px;
+  width: 23px;
+  height: 23px;
 }
 @media (min-width: 992px) {
   header .right-items {
@@ -158,7 +161,7 @@ header .right-items label .icons {
 .poster-list {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 .poster-list .error-message {
   color: red;
@@ -166,19 +169,14 @@ header .right-items label .icons {
 }
 
 .poster {
-  flex-basis: 48%;
-  height: 250px;
-  margin: 5px 0px;
+  flex-basis: 50%;
+  height: 298px;
+  padding: 10px;
   cursor: pointer;
 }
 .poster:hover {
-  flex-basis: 49%;
-  height: 260px;
-  margin: 0;
-  transition: width ease 700ms;
-}
-.poster:hover .labels {
-  top: -250px;
+  transition: transform ease 500ms;
+  transform: scale(1.08);
 }
 .poster img {
   width: 100%;
@@ -186,7 +184,7 @@ header .right-items label .icons {
 }
 .poster .labels {
   position: relative;
-  top: -245px;
+  top: 30px;
 }
 .poster .labels .left {
   float: left;
@@ -206,56 +204,33 @@ header .right-items label .icons {
   width: 10px;
   height: 10px;
 }
-.poster .labels::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 @media (min-width: 600px) {
   .poster {
-    flex-basis: 31%;
+    flex-basis: 33.33%;
+    height: 328px;
   }
-  .poster:hover {
-    flex-basis: 32%;
-    height: 260px;
-    margin: 0;
-  }
-  .poster:hover .labels {
-    top: -250px;
+}
+@media (min-width: 768px) {
+  .poster {
+    height: 348px;
   }
 }
 @media (min-width: 992px) {
   .poster {
-    flex-basis: 23%;
-    height: 300px;
-    margin: 10px 0px;
-  }
-  .poster:hover {
-    flex-basis: 24%;
-    height: 320px;
-    margin: 0;
-  }
-  .poster:hover .labels {
-    top: -310px;
-  }
-  .poster .labels {
-    top: -290px;
+    flex-basis: 25%;
+    height: 368px;
   }
   .poster .labels .left, .poster .labels .right {
-    font-size: 12px;
+    font-size: 14px;
+  }
+  .poster .labels .left .icons, .poster .labels .right .icons {
+    width: 15px;
+    height: 15px;
   }
 }
 @media (min-width: 1400px) {
   .poster {
-    flex-basis: 18%;
-  }
-  .poster:hover {
-    flex-basis: 19%;
-    height: 320px;
-    margin: 0;
-  }
-  .poster:hover .labels {
-    top: -310px;
+    flex-basis: 20%;
   }
 }
 
@@ -275,18 +250,17 @@ header .right-items label .icons {
   position: absolute;
   top: 5px;
   right: 5px;
-  padding: 2px;
   background-color: #011527;
-  border-radius: 5px;
+  border-radius: 11px;
+  padding: 4px;
   cursor: pointer;
-  width: 12px;
-  height: 12px;
+  width: 20px;
+  height: 20px;
 }
 @media (min-width: 992px) {
   .popup-modal .modal-close {
-    padding: 3px;
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
   }
 }
 .popup-modal h2, .popup-modal h3 {
@@ -298,12 +272,17 @@ header .right-items label .icons {
 }
 @media (min-width: 600px) {
   .popup-modal h2 {
-    font-size: 18px;
+    font-size: 22px;
+  }
+}
+@media (min-width: 768px) {
+  .popup-modal h2 {
+    font-size: 24px;
   }
 }
 @media (min-width: 1400px) {
   .popup-modal h2 {
-    font-size: 20px;
+    font-size: 30px;
   }
 }
 .popup-modal h3 {
@@ -315,9 +294,14 @@ header .right-items label .icons {
     font-size: 14px;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 992px) {
   .popup-modal h3 {
     font-size: 16px;
+  }
+}
+@media (min-width: 1400px) {
+  .popup-modal h3 {
+    font-size: 18px;
   }
 }
 .popup-modal .content {
@@ -357,12 +341,15 @@ header .right-items label .icons {
 }
 @media (min-width: 992px) {
   .popup-modal .title {
-    height: 300px;
+    height: 350px;
+  }
+  .popup-modal .title h2 {
+    top: -200px;
   }
 }
 .popup-modal .body {
   width: 100%;
-  padding: 15px;
+  padding: 0px 15px 15px;
   font-size: 11px;
 }
 .popup-modal .body .group {
@@ -390,7 +377,7 @@ header .right-items label .icons {
     height: 10px;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 992px) {
   .popup-modal .body {
     font-size: 14px;
   }
@@ -400,6 +387,18 @@ header .right-items label .icons {
   .popup-modal .body .labels img.icons {
     width: 12px;
     height: 12px;
+  }
+}
+@media (min-width: 1400px) {
+  .popup-modal .body {
+    font-size: 16px;
+  }
+  .popup-modal .body .labels {
+    font-size: 14px;
+  }
+  .popup-modal .body .labels img.icons {
+    width: 14px;
+    height: 14px;
   }
 }
 

@@ -1,21 +1,21 @@
 {{#if posters}}
   {{#each posters}}
-    {{#if this.poster_path}}
-      <div class="poster" onclick="getMovieDetails('{{this.id}}')">
-        <img src="{{./../ImageBaseURL}}w220_and_h330_face{{this.poster_path}}" alt="poster" />
-        <div class="labels">
-          <div class="left">
-            <img src="./public/icons/star.svg" class="icons" alt="rating" />
-            <span>{{this.vote_average}}</span>
+      <div class="poster" onclick="getMovieDetails('{{id}}')">
+        {{!-- <div class="poster-item"> --}}
+          <div class="labels">
+            <div class="left">
+              <img src="./public/icons/star.svg" class="icons" alt="rating" />
+              <span>{{vote_average}}</span>
+            </div>
+            <div class="right">
+              <img src="./public/icons/clock.svg" class="icons" alt="duration" />
+              <span>{{duration runtime}}</span>
+            </div>
           </div>
-          <div class="right">
-            <img src="./public/icons/list.svg" class="icons" alt="duration" />
-            <span>{{this.release_date}}</span>
-          </div>
-        </div>
+          {{loadImageBackdrop images 'poster'}}
+        {{!-- </div> --}}
       </div>
-    {{/if}}
   {{/each}}
 {{else}}
-<div class="error-message"><h1>No data Found</h1></div>
+  <div class="error-message"><h1>No data Found</h1></div>
 {{/if}}

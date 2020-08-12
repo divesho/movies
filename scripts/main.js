@@ -1,21 +1,9 @@
 let ConfigData = null;
 let ImageBaseURL = null;
-let PopularMovies = [];
-let UpcomingMOvies = [];
+let RenderedMovies = {};
 let PrevSearchVal = '';
 
-// Register helpers on handlebars
-Handlebars.registerHelper('genersStr', function (arr) {
-  let str = [];
-
-  arr.map(function (genre) {
-    str.push(genre.name);
-  });
-
-  return str.join(', ');
-});
-
-// Trigger initial call onload.
+// Trigger initial call onload
 $(function () {
   getConfigurations();
 });
@@ -58,13 +46,12 @@ function searchMovies() {
       return console.log("Some error occured");
     }
 
-    if (currentType === "popular") {
-      PopularMovies = res.results;
-    } else {
-      UpcomingMOvies = res.results;
-    }
+    getAllData(res.results)
+    .then(function(movies) {
 
-    renderMovies(currentType);
+      RenderedMovies = movies;
+      renderMovies();
+    });
   });
 }
 
@@ -74,7 +61,48 @@ function changeActiveClass(type) {
   $("#nav-" + type).addClass("active")
 }
 
-// Get movie list based type passed as argument. [popular or upcoming]
+// Parse results into object of objects. 
+// This function can be used to include only required elements into global object to reduce size
+function parseFullResult(arr) {
+
+  let obj = {};
+
+  arr.map(function(movie) {
+    if(movie.status === "fulfilled") {
+      obj[movie.value.id] = movie.value;
+    }
+  });
+
+  return obj;
+}
+
+// To get complete details of movies recieved 
+// either from popular, upcoming or search list
+function getAllData(arr) {
+  return new Promise(function(resolve, reject) {
+    
+    let promises = [];
+
+    promises = arr.map(function(movie) {
+      let url = CONFIG.movieDetails;
+      url = url.replace('MOVIE_ID', movie.id);
+
+      return serverCall(url);
+    });
+
+    Promise.allSettled(promises)
+    .then(function(res) {
+      
+      resolve(parseFullResult(res));
+    })
+    .catch(function(error) {
+
+      reject('error');
+    });
+  });
+}
+
+// Get movie list based on type passed as argument. [popular or upcoming]
 function getMovies(type) {
 
   let url = type === "popular" ? CONFIG.popularMovies : CONFIG.upcomingMovies;
@@ -85,56 +113,53 @@ function getMovies(type) {
     if (error) {
       console.log("some error occured");
     }
+
     changeActiveClass(type);
+    getAllData(res.results)
+    .then(function(movies) {
 
-    if (type === "popular") {
-      PopularMovies = res.results;
-    } else {
-      UpcomingMOvies = res.results;
-    }
-
-    renderMovies(type);
+      RenderedMovies = movies;
+      renderMovies();
+    });
   });
 }
 
 // Render Posters using templates defined
-function renderMovies(type) {
+function renderMovies() {
 
-  let movies = (type === "popular") ? PopularMovies : UpcomingMOvies;
   let poster = Handlebars.templates.poster;
 
-  $("#movieList").html(poster({ ImageBaseURL, posters: movies }));
+  $("#movieList").html(poster({ ImageBaseURL, posters: RenderedMovies }));
 }
 
 // Get movie details based on movie id
 function getMovieDetails(id) {
 
-  let url = CONFIG.movieDetails;
-  url = url.replace('MOVIE_ID', id);
-
-  serverCall(url, function (error, movie) {
-    if (error) {
-      return console.log("some error occured", error);
-    }
-
-    let popupModal = Handlebars.templates.popupModal;
-    $("#popupModal").html(popupModal({ ...movie, ImageBaseURL })).show();
-  });
+  let movie = RenderedMovies[id];
+  let popupModal = Handlebars.templates.popupModal;
+  $("#popupModal").html(popupModal({ ...movie, ImageBaseURL })).show();
 }
 
 // Generic ajax call to get data from server
 function serverCall(url, callback) {
-
-  $.ajax({
-    url,
-    type: "GET",
-    success: function (res) {
-      callback(null, res);
-    },
-    error: function (err) {
-      callback(err);
-    }
-  })
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url,
+      type: "GET",
+      success: function (res) {
+        if(callback) {
+          callback(null, res);
+        }
+        resolve(res);
+      },
+      error: function (err) {
+        if(callback) {
+          callback(err);
+        }
+        reject(err);
+      }
+    })
+  });
 }
 
 // Close popup modal

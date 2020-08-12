@@ -6,7 +6,8 @@ const CONFIG = (function(){
     "configUrl": "https://api.themoviedb.org/3/configuration?api_key=" + api_key,
     "popularMovies": "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=" + api_key,
     "upcomingMovies": "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=" + api_key,
-    "movieDetails": "https://api.themoviedb.org/3/movie/MOVIE_ID?language=en-US&page=1&api_key=" + api_key,
+    // "movieDetails": "https://api.themoviedb.org/3/movie/MOVIE_ID?language=en-US&page=1&api_key=" + api_key,
+    "movieDetails": "https://api.themoviedb.org/3/movie/MOVIE_ID?language=en-US&append_to_response=credits,images&include_image_language=en,null&api_key=" + api_key,
     "searchUrl": "https://api.themoviedb.org/3/search/movie?language=en-US&page=1&api_key=" + api_key
   }
 })();
