@@ -160,11 +160,6 @@ header .right-items label .icons {
   flex-flow: row wrap;
   justify-content: space-evenly;
 }
-.poster-list::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 .poster-list .error-message {
   color: red;
   margin: auto;

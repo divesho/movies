@@ -175,12 +175,6 @@ header {
   flex-flow: row wrap;
   justify-content: space-evenly;
 
-  &::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
   .error-message {
     color: $red-color;
     margin: auto;
