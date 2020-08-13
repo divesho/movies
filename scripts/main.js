@@ -3,10 +3,23 @@ let ImageBaseURL = null;
 let RenderedMovies = {};
 let PrevSearchVal = '';
 
+const debounceDelayTime = 300;
+
 // Trigger initial call onload
 $(function () {
   getConfigurations();
 });
+
+// Debounce function
+const debounce = (caller) => { 
+  let timer; 
+  return function() { 
+    const context = this;
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(() => caller.apply(context, args), debounceDelayTime);
+  } 
+}
 
 // Get configuration details of image from server
 function getConfigurations() {
@@ -54,6 +67,7 @@ function searchMovies() {
     });
   });
 }
+let debouncedSearch = debounce(searchMovies);
 
 // Change active class of navigation item
 function changeActiveClass(type) {
@@ -129,7 +143,7 @@ function renderMovies() {
 
   let poster = Handlebars.templates.poster;
 
-  $("#movieList").html(poster({ ImageBaseURL, posters: RenderedMovies }));
+  $("#movieList").html(poster({ ImageBaseURL, posters: {...RenderedMovies}, length: Object.keys(RenderedMovies).length }));
 }
 
 // Get movie details based on movie id
